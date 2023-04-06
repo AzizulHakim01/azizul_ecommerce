@@ -2,7 +2,6 @@ import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Helmet } from "react-helmet";
-import Toast  from "react-hot-toast";
 
 const Layout = ({ children, title, description, keywords, author }) => {
   return (
@@ -17,7 +16,6 @@ const Layout = ({ children, title, description, keywords, author }) => {
       <Header />
       <main>
         {children}
-        <Toast />
       </main>
       <Footer />
     </div>

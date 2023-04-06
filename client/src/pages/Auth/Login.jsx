@@ -1,12 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../component/Layout/Layout";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useAuth } from "../../context/auth";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [auth, setAuth] = useAuth()
+
+  const navigate = useNavigate();
+
+  //form function
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/api/v1/auth/login",
+        {email, password }
+      );
+      if (res.data.success) {
+        toast.success(res.data.message);
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token:res.data.token,
+        });
+        localStorage.setItem('auth', JSON.stringify(res.data))
+        navigate("/");
+        alert("Log in Successfully")
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <Layout>
+    <Layout title="Login Here - Azizul eCommerce">
       <div className="login">
         <h1>Login Here</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
@@ -16,6 +52,10 @@ const Login = () => {
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
+              placeholder="Enter Your Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
             <div id="emailHelp" className="form-text">
               We'll never share your email with anyone else.
@@ -29,6 +69,10 @@ const Login = () => {
               type="password"
               className="form-control"
               id="exampleInputPassword1"
+              placeholder="Enter A Complicated Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           <div className="mb-3 form-check">
