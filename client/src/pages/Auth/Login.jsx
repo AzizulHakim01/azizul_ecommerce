@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../component/Layout/Layout";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/auth";
@@ -11,6 +11,7 @@ const Login = () => {
   const [auth, setAuth] = useAuth()
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   //form function
   const handleSubmit = async (e) => {
@@ -28,10 +29,10 @@ const Login = () => {
           token:res.data.token,
         });
         localStorage.setItem('auth', JSON.stringify(res.data))
-        navigate("/");
-        alert("Log in Successfully")
+        navigate(location.state || "/");
+        alert(res.data.message)
       } else {
-        toast.error(res.data.message);
+        alert(res.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -85,6 +86,9 @@ const Login = () => {
               Remember me
             </label>
           </div>
+          <button type="button" className="me-5 btn btn-primary" onClick={()=>{navigate('/forgot-password')}}>
+            Forgot Password
+          </button>
           <button type="submit" className="btn btn-primary">
             Submit
           </button>

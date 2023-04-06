@@ -25,11 +25,10 @@ const Register = () => {
         { name, email, password, phone, address, answer }
       );
       if(res.data.success){
-        toast.success(res.data.message);
+        alert(res.data.message);
         navigate('/login')
-        alert("Register Successfully")
       }
-      else{toast.error(res.data.message)}
+      else{alert(res.data.message)}
     } catch (error) {
       console.log(error);
     }
@@ -129,7 +128,7 @@ const Register = () => {
           </div>
 
           <button type="submit" className="btn btn-primary">
-            Submit
+            Sign Up
           </button>
         </form>
       </div>
