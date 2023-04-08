@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
+import Swal from "sweetalert2";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -11,7 +12,12 @@ const Header = () => {
       token: "",
     });
     localStorage.removeItem('auth')
-    alert("Log out Successfully")
+    Swal.fire({
+          title: 'Logged Out',
+          text: "Logout Successfully",
+          icon: 'success',
+          confirmButtonText: 'Close'
+        });
   };
 
   return (

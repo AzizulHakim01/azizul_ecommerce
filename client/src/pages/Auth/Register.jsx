@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../component/Layout/Layout";
 import { useNavigate} from "react-router-dom";
 import axios from 'axios'
-import  toast from 'react-hot-toast';
+import Swal from 'sweetalert2'
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -25,10 +25,20 @@ const Register = () => {
         { name, email, password, phone, address, answer }
       );
       if(res.data.success){
-        alert(res.data.message);
+        Swal.fire({
+          title: 'Registered',
+          text: res.data.message,
+          icon: 'success',
+          confirmButtonText: 'Close'
+        });
         navigate('/login')
       }
-      else{alert(res.data.message)}
+      else{Swal.fire({
+        title: 'Error',
+        text: res.data.message,
+        icon: 'error',
+        confirmButtonText: 'Close'
+      });}
     } catch (error) {
       console.log(error);
     }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../component/Layout/Layout";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 import { useAuth } from "../../context/auth";
 
 const Login = () => {
@@ -22,7 +22,6 @@ const Login = () => {
         {email, password }
       );
       if (res.data.success) {
-        toast.success(res.data.message);
         setAuth({
           ...auth,
           user: res.data.user,
@@ -30,9 +29,19 @@ const Login = () => {
         });
         localStorage.setItem('auth', JSON.stringify(res.data))
         navigate(location.state || "/");
-        alert(res.data.message)
+        Swal.fire({
+          title: 'Logged In',
+          text: res.data.message,
+          icon: 'success',
+          confirmButtonText: 'Close'
+        });
       } else {
-        alert(res.data.message);
+        Swal.fire({
+          title: 'Error',
+          text: res.data.message,
+          icon: 'error',
+          confirmButtonText: 'Close'
+        });
       }
     } catch (error) {
       console.log(error);
