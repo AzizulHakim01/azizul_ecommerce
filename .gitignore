@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 *.png
+
+git
+git.pub
