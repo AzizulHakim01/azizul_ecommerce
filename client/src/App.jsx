@@ -11,6 +11,11 @@ import Login from "./pages/Auth/Login";
 import Dashboard from "./pages/user/Dashboard";
 import PrivateRoute from './component/Routes/Private';
 import ForgotPassword from "./pages/Auth/ForgotPassword";
+import AdminRoute from "./component/Routes/AdminRoute";
+import AdminDashboard from './pages/Admin/AdminDashboard';
+import CreateCategory from "./pages/Admin/CreateCategory";
+import CreateProduct from "./pages/Admin/CreateProduct";
+import Users from "./pages/Admin/Users";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,7 +26,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<PrivateRoute />}>
-            <Route path="" element={<Dashboard />} />
+            <Route path="user" element={<Dashboard />} />
+          </Route>
+          <Route path="/dashboard" element={<AdminRoute />}>
+            <Route path="admin" element={<AdminDashboard />} />
+            <Route path="admin/create-category" element={<CreateCategory />} />
+            <Route path="admin/create-product" element={<CreateProduct />} />
+            <Route path="admin/users" element={<Users />} />
           </Route>
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/register" element={<Register />} />

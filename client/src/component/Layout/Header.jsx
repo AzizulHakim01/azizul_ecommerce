@@ -11,13 +11,13 @@ const Header = () => {
       user: null,
       token: "",
     });
-    localStorage.removeItem('auth')
+    localStorage.removeItem("auth");
     Swal.fire({
-          title: 'Logged Out',
-          text: "Logout Successfully",
-          icon: 'success',
-          confirmButtonText: 'Close'
-        });
+      title: "Logged Out",
+      text: "Logout Successfully",
+      icon: "success",
+      confirmButtonText: "Close",
+    });
   };
 
   return (
@@ -65,16 +65,36 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <li className="nav-item">
-                    <NavLink
-                      onClick={handleLogOut}
-                      to="/login"
-                      className="nav-link"
-                      href="#"
+                  <div className="dropdown">
+                    <button
+                      className="btn btn-secondary dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
                     >
-                      Logout
-                    </NavLink>
-                  </li>
+                      {auth?.user?.name}
+                    </button>
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton1"
+                    >
+                      <li>
+                        <NavLink className="dropdown-item" to={`/dashboard/${auth?.user?.role === 1 ? 'admin':'user'}`}>
+                          Dashboard
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          onClick={handleLogOut}
+                          to="/login"
+                          className="dropdown-item"
+                        >
+                          Logout
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </div>
                 </>
               )}
               <li className="nav-item">
